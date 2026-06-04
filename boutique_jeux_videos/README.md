@@ -1,17 +1,22 @@
-# boutique_jeux_videos
+# Boutique Jeux Vidéo
 
-A new Flutter project.
+Application Flutter de présentation d'une boutique de jeux vidéo.
 
-## Getting Started
+## Fonctionnalités
 
-This project is a starting point for a Flutter application.
+- **Boutique** : liste de 35 jeux avec image, titre, genre et prix
+- **Profil** : page utilisateur (à venir)
 
-A few resources to get you started if this is your first Flutter project:
+## Lancer le projet
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```bash
+flutter pub get
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> Sur navigateur, l'interface s'affiche automatiquement au format téléphone (390×844px).
+
+## Stack
+
+- Flutter / Dart
+- Material 3
