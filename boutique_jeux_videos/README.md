@@ -5,6 +5,7 @@ Application Flutter de présentation d'une boutique de jeux vidéo.
 ## Fonctionnalités
 
 - **Boutique** : liste de 35 jeux avec image, titre, genre et prix
+- **Détail d'un jeu** : page dédiée accessible via le bouton "Voir" (image, titre, description, badges)
 - **Profil** : page utilisateur (à venir)
 
 ## Lancer le projet

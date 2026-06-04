@@ -1,6 +1,5 @@
 import '../models/video_game.dart';
 
-// Images : Steam CDN headers (460×215) — publicly accessible
 const List<VideoGame> gamesData = [
   VideoGame(
     id: 1,

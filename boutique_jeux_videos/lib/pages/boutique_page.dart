@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/games_data.dart';
 import '../models/video_game.dart';
+import 'game_detail_page.dart';
 
 class BoutiquePage extends StatelessWidget {
   const BoutiquePage({super.key});
@@ -33,7 +34,6 @@ class _GameCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // Image de fond
           Image.network(
             game.imageUrl,
             fit: BoxFit.cover,
@@ -52,7 +52,6 @@ class _GameCard extends StatelessWidget {
             ),
           ),
 
-          // Dégradé sombre pour lisibilité
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -63,14 +62,12 @@ class _GameCard extends StatelessWidget {
             ),
           ),
 
-          // Badge genre — coin supérieur gauche
           Positioned(
             top: 12,
             left: 12,
             child: _Badge(label: game.genre, color: Colors.deepPurple),
           ),
 
-          // Badge prix — coin supérieur droit
           Positioned(
             top: 12,
             right: 12,
@@ -80,10 +77,15 @@ class _GameCard extends StatelessWidget {
             ),
           ),
 
-          // Bouton "Voir" centré
           Center(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => GameDetailPage(game: game),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black87,
@@ -99,7 +101,6 @@ class _GameCard extends StatelessWidget {
             ),
           ),
 
-          // Titre du jeu en bas
           Positioned(
             bottom: 12,
             left: 12,
