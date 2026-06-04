@@ -10,100 +10,112 @@ class GameCard extends StatelessWidget {
 
   final VideoGame game;
 
+  // Seuil en dessous duquel on considère la carte "petite" (grille 3 colonnes)
+  static const double _wideThreshold = 200;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // Image de fond
-        CachedNetworkImage(
-          imageUrl: game.imageUrl,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Container(
-            color: Colors.grey[900],
-            child: const Center(
-              child: CircularProgressIndicator(color: Colors.white54),
-            ),
-          ),
-          errorWidget: (context, url, error) => Container(
-            color: Colors.grey[900],
-            child: const Icon(
-              Icons.videogame_asset,
-              size: 40,
-              color: Colors.white24,
-            ),
-          ),
-        ),
-
-        // Dégradé bas
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black54],
-            ),
-          ),
-        ),
-
-        // Badge genre — coin supérieur gauche
-        Positioned(
-          top: 8,
-          left: 8,
-          child: GameBadge(label: game.genre, color: Colors.deepPurple),
-        ),
-
-        // Badge prix — coin supérieur droit
-        Positioned(
-          top: 8,
-          right: 8,
-          child: GameBadge(
-            label: game.formattedPrice,
-            color: game.price == null ? Colors.green[700]! : Colors.orange[800]!,
-          ),
-        ),
-
-        // Bouton "Voir" centré
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => GameDetailPage(game: game)),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black87,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= _wideThreshold;
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            // Image de fond
+            CachedNetworkImage(
+              imageUrl: game.imageUrl,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                color: Colors.grey[900],
+                child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white54),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey[900],
+                child: const Icon(
+                  Icons.videogame_asset,
+                  size: 40,
+                  color: Colors.white24,
+                ),
               ),
             ),
-            child: const Text(
-              'Voir',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-            ),
-          ),
-        ),
 
-        // Titre en bas
-        Positioned(
-          bottom: 8,
-          left: 8,
-          right: 8,
-          child: Text(
-            game.title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              shadows: [Shadow(blurRadius: 4, color: Colors.black)],
+            // Dégradé bas
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Colors.black54],
+                ),
+              ),
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
+
+            // Badge genre — coin supérieur gauche
+            Positioned(
+              top: 8,
+              left: 8,
+              child: GameBadge(label: game.genre, color: Colors.deepPurple),
+            ),
+
+            // Badge prix — coin supérieur droit
+            Positioned(
+              top: 8,
+              right: 8,
+              child: GameBadge(
+                label: game.formattedPrice,
+                color: game.price == null ? Colors.green[700]! : Colors.orange[800]!,
+              ),
+            ),
+
+            // Bouton "Voir" centré
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => GameDetailPage(game: game)),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black87,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                child: const Text(
+                  'Voir',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                ),
+              ),
+            ),
+
+            // Titre en grand centré — uniquement en mode large (boutique)
+            if (isWide)
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: 48, left: 12, right: 12),
+                child: Text(
+                  game.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(blurRadius: 6, color: Colors.black),
+                      Shadow(blurRadius: 12, color: Colors.black54),
+                    ],
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }
