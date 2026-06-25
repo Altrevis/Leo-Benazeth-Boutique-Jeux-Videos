@@ -28,4 +28,15 @@ class VideoGame {
       price: (json['price'] as num?)?.toDouble(),
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'image_url': imageUrl,
+      'genre': genre,
+      'price': price,
+    };
+  }
 }
