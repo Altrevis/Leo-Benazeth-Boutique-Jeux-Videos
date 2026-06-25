@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/video_game.dart';
 
-class GameDetailPage extends StatelessWidget {
+class GameDetailPage extends StatefulWidget {
   const GameDetailPage({super.key, required this.game});
 
   final VideoGame game;
 
   @override
+  State<GameDetailPage> createState() => _GameDetailPageState();
+}
+
+class _GameDetailPageState extends State<GameDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    _saveLastViewed();
+  }
+
+  Future<void> _saveLastViewed() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('last_viewed', widget.game.title);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final game = widget.game;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
